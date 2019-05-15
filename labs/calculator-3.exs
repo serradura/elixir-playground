@@ -39,24 +39,24 @@ defmodule Calculator do
   end
 end
 
-defmodule Calculator.Interface do
-  def repl(accumulator \\ 0.0, options \\ [])
-  def repl(accumulator, options) do
+defmodule Calculator.REPL do
+  def run(accumulator \\ 0.0, options \\ [])
+  def run(accumulator, options) do
     puts_total?(options) && puts_total(accumulator)
 
     result = gets_input() |> Calculator.calculate(accumulator)
 
     case result do
-      :error -> puts_invalid_operation() && repl(accumulator, total: false)
+      :error -> puts_invalid_operation() && run(accumulator, puts_total?: false)
       :exit -> System.halt()
-      total -> repl(total)
+      total -> run(total)
     end
   end
 
-  def gets_input, do: IO.gets("<< ")
+  defp gets_input, do: IO.gets("<< ")
 
   defp puts_total(total), do: IO.puts(">> #{format_float_as_decimal(total)}")
-  defp puts_total?(options), do: Keyword.get(options, :total, true)
+  defp puts_total?(options), do: Keyword.get(options, :puts_total?, true)
 
   defp puts_invalid_operation do
     IO.puts("!! Please, try again or enter EXIT to turn-off.")
@@ -70,4 +70,4 @@ defmodule Calculator.Interface do
   end
 end
 
-Calculator.Interface.repl()
+Calculator.REPL.run()
