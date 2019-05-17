@@ -1,6 +1,4 @@
 defmodule Fibonacci do
-  alias Fibonacci.Computer
-
   def calc(0), do: 0
   def calc(1), do: 1
   def calc(2), do: 1
@@ -8,14 +6,9 @@ defmodule Fibonacci do
     Enum.reduce(3..n, {1, 1}, fn _, {curr, prev} -> {curr + prev, curr} end)
   end
 
-  def compute(n)
-  def compute(n), do: Computer.calc(n)
-end
-
-defmodule Fibonacci.Computer do
-  def calc(n, curr \\ 0, next \\ 1)
-  def calc(0, curr, next), do: {curr, next}
-  def calc(n, curr, next), do: calc(n-1, next, curr + next)
+  def compute(n, curr \\ 0, next \\ 1)
+  def compute(0, curr, next), do: {curr, next}
+  def compute(n, curr, next), do: compute(n-1, next, curr + next)
 end
 
 # Enum.map(1..37, &Fibonacci.calc/1)
