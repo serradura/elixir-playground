@@ -4,8 +4,7 @@ defmodule TCO do
   end
 
   defp do_list_len([], acc), do: acc
-  defp do_list_len(list, acc) do
-    [_ | tail] = list
+  defp do_list_len([_ | tail], acc) do
     do_list_len(tail, acc + 1)
   end
 end

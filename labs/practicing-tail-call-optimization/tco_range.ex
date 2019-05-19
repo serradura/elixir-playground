@@ -7,6 +7,6 @@ defmodule TCO do
   defp do_range(from, to, list) do
     next = if from < to, do: to - 1, else: to + 1
 
-    do_range(from, next, [next] ++ list)
+    do_range(from, next, [next | list])
   end
 end

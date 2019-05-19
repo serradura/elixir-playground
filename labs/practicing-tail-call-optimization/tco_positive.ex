@@ -4,11 +4,9 @@ defmodule TCO do
   end
 
   defp do_positive([], acc), do: acc
-  defp do_positive(list, acc) do
-    [head | tail] = list
+  defp do_positive([head | tail], prev_acc) do
+    acc = if is_number(head) and head > 0, do: [head | prev_acc], else: prev_acc
 
-    new_acc = if is_number(head) and head > 0, do: [head] ++ acc, else: acc
-
-    do_positive(tail, new_acc)
+    do_positive(tail, acc)
   end
 end
