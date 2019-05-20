@@ -42,7 +42,9 @@ defmodule MultiplicationTable do
   defp print_table({number, results}) do
     print_title(number)
 
-    Enum.map(results, fn {{x, y}, z} -> "#{x} x #{y} = #{z}" end)
+    results
+    |> Enum.sort(fn {{_, ya}, _}, {{_, yb}, _} -> ya < yb end)
+    |> Enum.map(fn {{x, y}, z} -> "#{x} x #{y} = #{z}" end)
     |> Enum.join("\n")
     |> IO.puts()
   end

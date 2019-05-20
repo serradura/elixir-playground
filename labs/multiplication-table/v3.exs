@@ -11,17 +11,7 @@ defmodule MultiplicationTable do
     {from, to} = get_numbers()
 
     generate(from, to)
-    |> Enum.group_by(fn {{x, _}, _} -> x end)
-    |> Enum.each(fn
-      {x, results} ->
-        print_title(x)
-
-        results
-        |> Enum.sort(fn {{_, ya}, _}, {{_, yb}, _} -> ya < yb end)
-        |> Enum.map(fn {{x, y}, z} -> "#{x} x #{y} = #{z}" end)
-        |> Enum.join("\n")
-        |> IO.puts()
-    end)
+    |> print_tables()
   end
 
   defp get_numbers do
@@ -46,6 +36,22 @@ defmodule MultiplicationTable do
     IO.puts(title)
     IO.puts(divider)
     IO.puts("")
+  end
+
+  defp print_tables(results) when is_map(results) do
+    results
+    |> Enum.group_by(fn {{x, _}, _} -> x end)
+    |> Enum.each(&print_table/1)
+  end
+
+  defp print_table({number, results}) do
+    print_title(number)
+
+    results
+    |> Enum.sort(fn {{_, ya}, _}, {{_, yb}, _} -> ya < yb end)
+    |> Enum.map(fn {{x, y}, z} -> "#{x} x #{y} = #{z}" end)
+    |> Enum.join("\n")
+    |> IO.puts()
   end
 end
 
