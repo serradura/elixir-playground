@@ -4,6 +4,17 @@ defmodule NaturalNums do
   def print(to) when is_integer(to) and to != 0 do
     from = if to > 0, do: 1, else: -1
 
+    Enum.join(from..to, "\n")
+    |> IO.puts
+  end
+end
+
+defmodule NaturalNums0 do
+  def print(to) when is_float(to), do: trunc(to) |> print()
+
+  def print(to) when is_integer(to) and to != 0 do
+    from = if to > 0, do: 1, else: -1
+
     Enum.each(from..to, &IO.puts/1)
   end
 end
@@ -97,6 +108,9 @@ end
 
 NaturalNums.print(3)
 NaturalNums.print(-3)
+
+NaturalNums0.print(3)
+NaturalNums0.print(-3)
 
 NaturalNums1.print(3)
 NaturalNums1.print(-3)
