@@ -46,12 +46,13 @@ defmodule TodoList do
     %TodoList{todo_list | entries: new_entries}
   end
 
-  def update_entry_title(%TodoList{}=todo_list, entry_id, value) do
-    update_entry(todo_list, entry_id, :title, value)
+  def update_entry_title(%TodoList{}=todo_list, entry_id, title)
+      when is_bitstring(title) do
+    update_entry(todo_list, entry_id, :title, title)
   end
 
-  def update_entry_date(%TodoList{}=todo_list, entry_id, value) do
-    update_entry(todo_list, entry_id, :date, value)
+  def update_entry_date(%TodoList{}=todo_list, entry_id, %Date{}=date) do
+    update_entry(todo_list, entry_id, :date, date)
   end
 
   def entries(%TodoList{}=todo_list, %Date{}=date) do
