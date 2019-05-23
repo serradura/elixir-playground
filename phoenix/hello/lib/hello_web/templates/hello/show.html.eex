@@ -1,8 +1,14 @@
 <div class="phx-hero">
   <h2>Hello <%= @messenger %>, from Phoenix!</h2>
   <p>
+    <a href="<%= Routes.hello_path(@conn, :index) %>">
+      Go to hello page
+    </a>
+  </p>
+  <p>or</p>
+  <p>
     <a href="<%= Routes.page_path(@conn, :index) %>">
-      Go to the welcome page!
+      Go to the welcome page
     </a>
   </p>
 </div>
