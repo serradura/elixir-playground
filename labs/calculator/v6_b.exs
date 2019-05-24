@@ -1,6 +1,4 @@
 defmodule Calculator do
-  alias Calculator.Operations
-
   @operation_pattern ~r/(\D)\s*(\d+(\.\d+)?)/
 
   def calculate(input, accumulator) do
