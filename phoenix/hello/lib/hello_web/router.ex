@@ -21,9 +21,24 @@ defmodule HelloWeb.Router do
 
     get "/hello", HelloController, :index
     get "/hello/:messenger", HelloController, :show
+
+    resources "/sessions", SessionController, only: [:new, :create, :delete],
+    singleton: true
   end
 
   forward "/jobs", BackgroundJob.Plug, name: "Hello Phoenix"
+
+  defp authenticate_user(conn, _) do
+    case get_session(conn, :user_id) do
+      nil ->
+        conn
+        |> Phoenix.Controller.put_flash(:error, "Login required")
+        |> Phoenix.Controller.redirect(to: "/")
+        |> halt()
+      user_id ->
+        assign(conn, :current_user, Hello.Accounts.get_user!(user_id))
+    end
+  end
 
   # Other scopes may use custom stacks.
   # scope "/api", HelloWeb do
