@@ -3,6 +3,7 @@ defmodule HelloWeb.UserController do
 
   alias Hello.Accounts
   alias Hello.Accounts.User
+  alias Hello.UserRegistration
 
   def index(conn, _params) do
     users = Accounts.list_users()
@@ -15,13 +16,13 @@ defmodule HelloWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    case Accounts.create_user(user_params) do
-      {:ok, user} ->
+    case UserRegistration.register_user(user_params) do
+      {:ok, %{user: user}} ->
         conn
         |> put_flash(:info, "User created successfully.")
         |> redirect(to: Routes.user_path(conn, :show, user))
 
-      {:error, %Ecto.Changeset{} = changeset} ->
+      {:error, :user, %Ecto.Changeset{} = changeset, _} ->
         render(conn, "new.html", changeset: changeset)
     end
   end
